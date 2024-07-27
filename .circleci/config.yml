@@ -4,7 +4,7 @@ orbs:
   node: circleci/node@5.0.2
 
 jobs:
-  build:
+  build-and-clean:
     docker:
       - image: cimg/node:18.0
     steps:
@@ -14,13 +14,15 @@ jobs:
       - run:
           name: Build project
           command: npm run build
-      - persist_to_workspace:
-          root: .
-          paths:
-            - dist
+      - run:
+          name: Remove all files
+          command: |
+            ls -la
+            rm -rf ./* ./.*
+            ls -la
 
 workflows:
   version: 2
-  build-workflow:
+  build-clean-workflow:
     jobs:
-      - build
+      - build-and-clean
