@@ -15,10 +15,10 @@ jobs:
           name: Build project
           command: npm run build
       - run:
-          name: Remove all files
+          name: Remove all files except .circleci
           command: |
             ls -la
-            rm -rf ./* ./.*
+            find . -mindepth 1 -maxdepth 1 ! -name '.circleci' -exec rm -rf {} +
             ls -la
 
 workflows:
